@@ -6,6 +6,7 @@ import static co.cantina.jooq.example.Tables.AUTHOR;
 import static co.cantina.jooq.example.Tables.BOOK;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.time.ZonedDateTime;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -46,6 +47,22 @@ public class Main {
                System.out.println("======From Fetch Into =======\n" 
                                   + a.getFullName()); 
            });
+    }
+    
+    private static void demonstrateDataConversion(final DSLContext dsl) {
+        
+        ZonedDateTime date = dsl
+            .select(BOOK.DATE_ADDED)
+            .from(BOOK)
+            .where(BOOK.TITLE.like("Domain%"))
+            .fetchOne(BOOK.DATE_ADDED);
+        
+                
+        System.out.printf(
+            "=============== Data Conversion ================\n"
+            + "Date Added: %s\n",
+            date
+        );  
     }
     
     private static void demonstrateStreams(final DSLContext dsl) {
@@ -95,8 +112,9 @@ public class Main {
             DSLContext dsl = DSL.using(conn, SQLDialect.POSTGRES);
             
             demonstrateInsert(dsl);
-            demonstrateStreams(dsl);
             demonstrateActiveRecord(dsl);
+            demonstrateStreams(dsl);
+            demonstrateDataConversion(dsl);
             demonstrateDelete(dsl);
         } 
         catch (Exception e) {

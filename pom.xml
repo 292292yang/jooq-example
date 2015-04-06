@@ -67,19 +67,17 @@
                                     <outputSchema>public</outputSchema>
                                 </schema>
                             </schemata>
-                            <dateAsTimestamp>true</dateAsTimestamp>
                             <customTypes>
                                 <customType>
                                     <name>ZonedDateTime</name>
                                     <type>java.time.ZonedDateTime</type>
-                                    <converter>co.cantina.jooq.ZonedDateTimeConverter</converter>
+                                    <converter>co.cantina.jooq.example.ZonedDateTimeConverter</converter>
                                 </customType>
                             </customTypes>
                             <forcedTypes>
                                 <forcedType>
                                     <name>ZonedDateTime</name>
-                                    <expression>.*</expression>
-                                    <types>TIMESTAMP</types>
+                                    <expression>.*\.date_added.*</expression>
                                 </forcedType>
                             </forcedTypes>
                         </database>
